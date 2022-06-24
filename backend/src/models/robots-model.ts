@@ -5,9 +5,11 @@ import { mongooseConnect } from '../db/mongoose.js';
 await mongooseConnect();
 
 const robotSchema = new mongoose.Schema({
-    speed: { type: String, required: [true, 'Need a title'] },
-    endurance: String,
-    creationDate: { type: Boolean, default: false },
+    name: { type: String, required: true },
+    img: { type: String, required: true },
+    speed: { type: Number, min: 0, max: 10, required: true },
+    endurance: { type: Number, min: 0, max: 10, required: true },
+    creationDate: { type: String, required: true },
 });
 
 export const Robot = mongoose.model('Robot', robotSchema);
