@@ -4,6 +4,14 @@ import { mongooseConnect } from '../db/mongoose.js';
 
 await mongooseConnect();
 
+export interface iRobot {
+    name: string;
+    img: string;
+    speed: number;
+    endurance: number;
+    creationDate: string;
+}
+
 const robotSchema = new mongoose.Schema({
     name: { type: String, required: true },
     img: { type: String, required: true },
