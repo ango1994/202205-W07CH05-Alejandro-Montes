@@ -65,7 +65,6 @@ export class MongooseController<T> {
                 (!req.body.name as Partial<iRobot>) ||
                 ((req.body.speed > 10) as Partial<iRobot>)
             ) {
-                console.log('pasa');
                 resp.end(JSON.stringify({}));
                 throw new Error('404');
             } else {
@@ -77,7 +76,6 @@ export class MongooseController<T> {
                 resp.end(JSON.stringify(newItem));
             }
         } catch (error) {
-            resp.send(error);
             next(error);
         }
     };

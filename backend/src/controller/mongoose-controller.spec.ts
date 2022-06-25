@@ -26,6 +26,7 @@ describe('Given a instantiated controller MongooseController', () => {
             setHeader: jest.fn(),
             status: jest.fn(),
             end: jest.fn(),
+            send: jest.fn(),
         };
         next;
     });
@@ -104,9 +105,16 @@ describe('Given a instantiated controller MongooseController', () => {
         });
     });
 
-    describe('When method patchController is called', () => {
+    describe('When method patchController is called with valid data', () => {
         test('Then resp.end should be called with data', async () => {
-            const result = { test: 'test' };
+            req = {
+                params: { id: '62b6e27ee58ac1d9d95681b2' },
+                body: {
+                    name: 'test',
+                    speed: 9,
+                },
+            };
+            const result = { name: 'test', speed: 9 };
             mockModel.findByIdAndUpdate = jest.fn().mockResolvedValue(result);
             await controller.patchController(
                 req as Request,
@@ -115,6 +123,26 @@ describe('Given a instantiated controller MongooseController', () => {
             );
             expect(resp.end).toHaveBeenCalledWith(JSON.stringify(result));
             expect(mockModel.findByIdAndUpdate).toHaveBeenCalled();
+        });
+    });
+    describe('When method patchController is called with invalid data', () => {
+        test('Then resp.end should be called with data', async () => {
+            req = {
+                params: { id: '62b6e27ee58ac1d9d95681b2' },
+                body: {
+                    name: '',
+                    speed: 19,
+                },
+            };
+            const result = {};
+            mockModel.findByIdAndUpdate = jest.fn().mockResolvedValue(result);
+            await controller.patchController(
+                req as Request,
+                resp as Response,
+                next
+            );
+            expect(resp.end).toHaveBeenCalledWith(JSON.stringify(result));
+            expect(next).toHaveBeenCalledWith(expect.any(Error));
         });
     });
 
