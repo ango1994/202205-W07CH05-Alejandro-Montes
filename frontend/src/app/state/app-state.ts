@@ -1,5 +1,6 @@
-import { RobotsState } from './robots/robots-reducer';
+import { iRobot } from '../interfaces/robot';
+import { iRobotsState } from './robots/robots-reducer';
 
 export interface AppState {
-  robots: RobotsState;
+  robots: Array<iRobot>;
 }

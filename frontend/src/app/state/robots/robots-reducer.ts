@@ -1,20 +1,21 @@
-import { createReducer, on, State } from '@ngrx/store';
+import { createReducer, on } from '@ngrx/store';
 import { iRobot } from 'src/app/interfaces/robot';
 import {
   addRobot,
+  loadRobotListFailure,
   loadRobotListSuccess,
   loadRobots,
   removeRobot,
   updateRobot,
 } from './robots-actions';
 
-export interface RobotsState {
+export interface iRobotsState {
   robots: iRobot[];
   error: string;
   status: 'pending' | 'loading' | 'error' | 'success';
 }
 
-export const initialState: RobotsState = {
+export const initialState: iRobotsState = {
   robots: [],
   error: '',
   status: 'pending',
@@ -36,5 +37,16 @@ export const robotsReducer = createReducer(
       robotArray._id === robot._id ? robot : robotArray
     ),
   })),
-  on(loadRobots, (state) => ({ ...state, status: 'loading' }))
+  on(loadRobots, (state) => ({ ...state, status: 'loading' })),
+  on(loadRobotListSuccess, (state, { robots }) => ({
+    ...state,
+    robots: robots,
+    error: '',
+    status: 'success',
+  })),
+  on(loadRobotListFailure, (state, { error }) => ({
+    ...state,
+    error: error,
+    status: 'error',
+  }))
 );

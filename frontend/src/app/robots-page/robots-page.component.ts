@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
+import { loadRobots } from '../state/robots/robots-actions';
+import { selectAllRobots, selectRobots } from '../state/robots/robots-selector';
 
 @Component({
   selector: 'app-robots-page',
@@ -7,9 +9,9 @@ import { Store } from '@ngrx/store';
   styleUrls: ['./robots-page.component.scss'],
 })
 export class RobotsPageComponent implements OnInit {
-  // public allRobots$ = this.store.select(selectAllRobots);
-  public robot = '';
-  constructor(private store: Store) {}
+  constructor(private store: Store<any>) {}
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.store.dispatch(loadRobots());
+  }
 }

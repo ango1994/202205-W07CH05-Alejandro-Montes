@@ -1,4 +1,7 @@
 import { Component } from '@angular/core';
+import { Store } from '@ngrx/store';
+import { loadRobots } from './state/robots/robots-actions';
+import { selectAllRobots } from './state/robots/robots-selector';
 
 @Component({
   selector: 'app-root',
@@ -6,5 +9,12 @@ import { Component } from '@angular/core';
   styleUrls: ['./app.component.scss'],
 })
 export class AppComponent {
-  title = 'Robots';
+  public allRobots$ = this.store.select(selectAllRobots);
+  public robot = {};
+
+  constructor(private store: Store) {}
+
+  ngOnInit(): void {
+    this.store.dispatch(loadRobots());
+  }
 }
