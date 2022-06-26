@@ -13,8 +13,10 @@ export const removeRobot = createAction(
 
 export const updateRobot = createAction(
   '[Robot Item] Update Robot',
-  props<{ robotId: string}>
-)
+  props<{ robot: iRobot }>()
+);
+
+export const loadRobots = createAction('[Robots Page] Load Robots');
 
 export const loadRobotListSuccess = createAction(
   '[Robot List/API] Retrieve Robots Success',
